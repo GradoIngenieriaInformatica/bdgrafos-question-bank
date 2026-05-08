@@ -1,0 +1,734 @@
+[
+    {
+      "id": 1,
+      "tipo": "write_function",
+      "nivel": "facil",
+      "enunciado": "Implementa la función embedding(texto) para generar embeddings usando SentenceTransformer y devolver un numpy array float32.",
+      "respuesta": {
+        "codigo": "def embedding(texto):\n    return model.encode(texto).astype('float32')",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["model.encode", "astype"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 2,
+      "tipo": "fix_function",
+      "nivel": "facil",
+      "enunciado": "Corrige la función para que reshape funcione correctamente antes de buscar en FAISS.",
+      "codigo_base": "def buscar(query,index):\n    q = embedding(query)\n    return index.search(q,3)",
+      "respuesta": {
+        "codigo": "def buscar(query,index):\n    q = embedding(query).reshape(1,-1)\n    return index.search(q,3)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["reshape"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 3,
+      "tipo": "modify_function",
+      "nivel": "facil",
+      "enunciado": "Modifica la función buscar para permitir configurar el parámetro k.",
+      "codigo_base": "def buscar(query, base, index):\n    q = embedding(query).reshape(1,-1)\n    return index.search(q,3)",
+      "respuesta": {
+        "codigo": "def buscar(query, base, index, k=3):\n    q = embedding(query).reshape(1,-1)\n    return index.search(q,k)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["k=3", "search(q,k)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 4,
+      "tipo": "write_function",
+      "nivel": "facil",
+      "enunciado": "Implementa una función que calcule score usando la fórmula 1 / (1 + distancia).",
+      "respuesta": {
+        "codigo": "def calcular_score(distancia):\n    return 1 / (1 + distancia)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["1 / (1 + distancia)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 5,
+      "tipo": "fix_function",
+      "nivel": "facil",
+      "enunciado": "Corrige la función para crear correctamente un índice FAISS usando la dimensión de los embeddings.",
+      "codigo_base": "dimension = vectores.shape[0]\nindex = faiss.IndexFlatL2(dimension)",
+      "respuesta": {
+        "codigo": "dimension = vectores.shape[1]\nindex = faiss.IndexFlatL2(dimension)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["shape[1]"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 6,
+      "tipo": "modify_function",
+      "nivel": "facil",
+      "enunciado": "Modifica la función buscar para devolver también la distancia obtenida desde FAISS.",
+      "codigo_base": "resultados.append({\"texto\": base[i]})",
+      "respuesta": {
+        "codigo": "resultados.append({\"texto\": base[i], \"distancia\": distancia})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["distancia"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 7,
+      "tipo": "write_function",
+      "nivel": "facil",
+      "enunciado": "Implementa una función que reconstruya completamente el índice después de agregar un nuevo texto.",
+      "respuesta": {
+        "codigo": "def agregar(self,texto):\n    self.base.append(texto)\n    self.index, self.vectores = construir_indice(self.base)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["append", "construir_indice"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 8,
+      "tipo": "fix_function",
+      "nivel": "facil",
+      "enunciado": "Corrige la búsqueda para que use correctamente el embedding de la query.",
+      "codigo_base": "q = query.reshape(1,-1)",
+      "respuesta": {
+        "codigo": "q = embedding(query).reshape(1,-1)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["embedding(query)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 9,
+      "tipo": "modify_function",
+      "nivel": "medio",
+      "enunciado": "Modifica buscar_filtrado para aceptar un parámetro k configurable.",
+      "codigo_base": "def buscar_filtrado(self, query, umbral=0.5):\n    resultados = self.buscar(query,5)",
+      "respuesta": {
+        "codigo": "def buscar_filtrado(self, query, umbral=0.5, k=5):\n    resultados = self.buscar(query,k)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["k=5", "buscar(query,k)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 10,
+      "tipo": "write_function",
+      "nivel": "medio",
+      "enunciado": "Implementa una función que compare dos queries y devuelva cuál tiene mayor similitud con un texto base.",
+      "respuesta": {
+        "codigo": "def comparar(q1,q2,texto,index,base):\n    r1 = buscar(q1,base,index,1)\n    r2 = buscar(q2,base,index,1)\n    return r1 if r1[0]['score'] > r2[0]['score'] else r2",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["score"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 11,
+      "tipo": "fix_function",
+      "nivel": "medio",
+      "enunciado": "Corrige el código para evitar error por embeddings vacíos.",
+      "codigo_base": "vectores = np.array([embedding(t) for t in base])",
+      "respuesta": {
+        "codigo": "vectores = np.array([embedding(t) for t in base if t.strip()])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["if t.strip()"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 12,
+      "tipo": "modify_function",
+      "nivel": "medio",
+      "enunciado": "Modifica la búsqueda para ordenar resultados por score descendente.",
+      "codigo_base": "return resultados",
+      "respuesta": {
+        "codigo": "return sorted(resultados, key=lambda x: x['score'], reverse=True)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["sorted", "reverse=True"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 13,
+      "tipo": "write_function",
+      "nivel": "medio",
+      "enunciado": "Implementa una función que detecte resultados ambiguos cuando dos scores sean muy parecidos.",
+      "respuesta": {
+        "codigo": "def ambiguo(resultados, margen=0.05):\n    return abs(resultados[0]['score'] - resultados[1]['score']) < margen",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["abs", "score"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 14,
+      "tipo": "fix_function",
+      "nivel": "medio",
+      "enunciado": "Corrige el cálculo de score para que disminuya cuando aumenta la distancia.",
+      "codigo_base": "score = distancia",
+      "respuesta": {
+        "codigo": "score = 1 / (1 + distancia)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["1 / (1 + distancia)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 15,
+      "tipo": "modify_function",
+      "nivel": "medio",
+      "enunciado": "Modifica la clase BuscadorSemantico para agregar logging de las queries realizadas.",
+      "codigo_base": "class BuscadorSemantico:\n    def __init__(self, base):\n        self.base = base",
+      "respuesta": {
+        "codigo": "class BuscadorSemantico:\n    def __init__(self, base):\n        self.base = base\n        self.logs = []\n\n    def buscar(self, query, k=3):\n        self.logs.append(query)\n        return buscar(query, self.base, self.index, k)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["logs.append"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 16,
+      "tipo": "write_function",
+      "nivel": "medio",
+      "enunciado": "Implementa una función que devuelva únicamente los textos encontrados sin incluir score ni distancia.",
+      "respuesta": {
+        "codigo": "def solo_textos(resultados):\n    return [r['texto'] for r in resultados]",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["texto"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 17,
+      "tipo": "fix_function",
+      "nivel": "medio",
+      "enunciado": "Corrige el código para evitar resultados repetidos en la búsqueda.",
+      "codigo_base": "resultados.append(base[i])",
+      "respuesta": {
+        "codigo": "if base[i] not in resultados:\n    resultados.append(base[i])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["not in resultados"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 18,
+      "tipo": "modify_function",
+      "nivel": "medio",
+      "enunciado": "Modifica el sistema para aceptar múltiples queries y devolver un resultado consolidado.",
+      "codigo_base": "def buscar(self, query, k=3):",
+      "respuesta": {
+        "codigo": "def buscar_multiple(self, queries, k=3):\n    resultados = []\n    for q in queries:\n        resultados.extend(self.buscar(q,k))\n    return resultados",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["for q in queries"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 19,
+      "tipo": "write_function",
+      "nivel": "medio",
+      "enunciado": "Implementa una función que calcule similitud manual usando distancia euclidiana.",
+      "respuesta": {
+        "codigo": "def similitud(v1,v2):\n    distancia = np.linalg.norm(v1-v2)\n    return 1/(1+distancia)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["np.linalg.norm"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 20,
+      "tipo": "fix_function",
+      "nivel": "medio",
+      "enunciado": "Corrige la función para convertir correctamente embeddings a float32 antes de agregar al índice.",
+      "codigo_base": "vectores = np.array([embedding(t) for t in base])",
+      "respuesta": {
+        "codigo": "vectores = np.array([embedding(t) for t in base]).astype('float32')",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["astype('float32')"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 21,
+      "tipo": "modify_function",
+      "nivel": "medio",
+      "enunciado": "Modifica la función buscar para devolver también el índice original del texto encontrado.",
+      "codigo_base": "resultados.append({'texto': base[i]})",
+      "respuesta": {
+        "codigo": "resultados.append({'texto': base[i], 'indice': int(i)})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["indice"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 22,
+      "tipo": "write_function",
+      "nivel": "dificil",
+      "enunciado": "Implementa una función que compare búsqueda lineal contra búsqueda FAISS y mida tiempo de ejecución.",
+      "respuesta": {
+        "codigo": "import time\n\ndef benchmark(query,base,index):\n    inicio = time.time()\n    buscar(query,base,index)\n    fin = time.time()\n    return fin-inicio",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["time.time"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 23,
+      "tipo": "fix_function",
+      "nivel": "dificil",
+      "enunciado": "Corrige el error de dimensiones incompatibles antes de insertar embeddings en FAISS.",
+      "codigo_base": "index.add(vectores[0])",
+      "respuesta": {
+        "codigo": "index.add(vectores)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["index.add(vectores)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 24,
+      "tipo": "modify_function",
+      "nivel": "dificil",
+      "enunciado": "Modifica el sistema para permitir eliminar textos y reconstruir el índice.",
+      "codigo_base": "self.base.append(texto)",
+      "respuesta": {
+        "codigo": "def eliminar(self,texto):\n    self.base.remove(texto)\n    self.index, self.vectores = construir_indice(self.base)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["remove", "construir_indice"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 25,
+      "tipo": "write_function",
+      "nivel": "dificil",
+      "enunciado": "Implementa una función que detecte queries fuera de dominio usando score mínimo.",
+      "respuesta": {
+        "codigo": "def fuera_de_dominio(resultados, umbral=0.3):\n    return resultados[0]['score'] < umbral",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["score"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 26,
+      "tipo": "fix_function",
+      "nivel": "dificil",
+      "enunciado": "Corrige el código para evitar error cuando k es mayor que el tamaño de la base.",
+      "codigo_base": "distancias, indices = index.search(q,k)",
+      "respuesta": {
+        "codigo": "k = min(k, len(base))\ndistancias, indices = index.search(q,k)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["min(k, len(base))"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 27,
+      "tipo": "modify_function",
+      "nivel": "dificil",
+      "enunciado": "Modifica la búsqueda para filtrar resultados por score mínimo configurable.",
+      "codigo_base": "return resultados",
+      "respuesta": {
+        "codigo": "return [r for r in resultados if r['score'] >= min_score]",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["min_score"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 28,
+      "tipo": "write_function",
+      "nivel": "dificil",
+      "enunciado": "Implementa una función que agrupe resultados semánticamente similares.",
+      "respuesta": {
+        "codigo": "def agrupar(resultados, umbral=0.8):\n    grupos = []\n    for r in resultados:\n        if r['score'] >= umbral:\n            grupos.append(r)\n    return grupos",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["umbral"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 29,
+      "tipo": "fix_function",
+      "nivel": "dificil",
+      "enunciado": "Corrige el código para reconstruir el índice después de insertar múltiples textos.",
+      "codigo_base": "self.base.extend(textos)",
+      "respuesta": {
+        "codigo": "self.base.extend(textos)\nself.index, self.vectores = construir_indice(self.base)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["extend", "construir_indice"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 30,
+      "tipo": "modify_function",
+      "nivel": "dificil",
+      "enunciado": "Modifica la clase BuscadorSemantico para almacenar historial completo de búsquedas con timestamp.",
+      "codigo_base": "self.logs.append(query)",
+      "respuesta": {
+        "codigo": "from datetime import datetime\nself.logs.append({\n    'query': query,\n    'timestamp': datetime.now().isoformat()\n})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["datetime.now", "timestamp"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 31,
+      "tipo": "write_function",
+      "nivel": "facil",
+      "enunciado": "Implementa una función que muestre únicamente los scores de los resultados encontrados.",
+      "respuesta": {
+        "codigo": "def obtener_scores(resultados):\n    return [r['score'] for r in resultados]",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["score"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 32,
+      "tipo": "fix_function",
+      "nivel": "facil",
+      "enunciado": "Corrige el código para evitar acceder a índices inexistentes.",
+      "codigo_base": "return base[indices[0][5]]",
+      "respuesta": {
+        "codigo": "if len(indices[0]) > 5:\n    return base[indices[0][5]]",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["len(indices[0])"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 33,
+      "tipo": "modify_function",
+      "nivel": "facil",
+      "enunciado": "Modifica la búsqueda para devolver resultados ordenados por score descendente.",
+      "codigo_base": "return resultados",
+      "respuesta": {
+        "codigo": "return sorted(resultados, key=lambda x: x['score'], reverse=True)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["reverse=True"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 34,
+      "tipo": "write_function",
+      "nivel": "medio",
+      "enunciado": "Implementa una función que permita buscar múltiples queries y agrupar resultados por query.",
+      "respuesta": {
+        "codigo": "def buscar_grupo(queries, sistema):\n    salida = {}\n    for q in queries:\n        salida[q] = sistema.buscar(q)\n    return salida",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["for q in queries"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 35,
+      "tipo": "fix_function",
+      "nivel": "medio",
+      "enunciado": "Corrige el código para convertir correctamente el embedding de query antes de buscar.",
+      "codigo_base": "q = embedding(query)",
+      "respuesta": {
+        "codigo": "q = embedding(query).reshape(1,-1)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["reshape"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 36,
+      "tipo": "modify_function",
+      "nivel": "medio",
+      "enunciado": "Modifica el sistema para agregar logs automáticos de inserción de textos.",
+      "codigo_base": "self.base.append(texto)",
+      "respuesta": {
+        "codigo": "self.base.append(texto)\nprint(f'Texto agregado: {texto}')",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["Texto agregado"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 37,
+      "tipo": "write_function",
+      "nivel": "medio",
+      "enunciado": "Implementa una función que calcule distancia promedio entre resultados encontrados.",
+      "respuesta": {
+        "codigo": "def distancia_promedio(resultados):\n    return sum(r['distancia'] for r in resultados)/len(resultados)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["distancia"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 38,
+      "tipo": "fix_function",
+      "nivel": "medio",
+      "enunciado": "Corrige el código para evitar división por cero al calcular score.",
+      "codigo_base": "score = 1/(distancia)",
+      "respuesta": {
+        "codigo": "score = 1/(1+distancia)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["1+distancia"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 39,
+      "tipo": "modify_function",
+      "nivel": "medio",
+      "enunciado": "Modifica la clase para permitir exportar la base completa en formato JSON.",
+      "codigo_base": "return self.base",
+      "respuesta": {
+        "codigo": "import json\n\ndef exportar(self):\n    return json.dumps(self.base, ensure_ascii=False)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["json.dumps"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 40,
+      "tipo": "write_function",
+      "nivel": "medio",
+      "enunciado": "Implementa una función que filtre resultados cuyo texto contenga una palabra específica.",
+      "respuesta": {
+        "codigo": "def filtrar_palabra(resultados, palabra):\n    return [r for r in resultados if palabra in r['texto']]",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["palabra in r['texto']"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 41,
+      "tipo": "write_function",
+      "nivel": "dificil",
+      "enunciado": "Implementa una función que detecte posibles ambigüedades semánticas cuando múltiples resultados tienen scores similares.",
+      "respuesta": {
+        "codigo": "def detectar_ambiguedad(resultados, margen=0.05):\n    return abs(resultados[0]['score'] - resultados[1]['score']) < margen",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["margen"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 42,
+      "tipo": "fix_function",
+      "nivel": "dificil",
+      "enunciado": "Corrige el código para evitar embeddings vacíos.",
+      "codigo_base": "return model.encode(texto)",
+      "respuesta": {
+        "codigo": "if not texto.strip():\n    raise ValueError('Texto vacío')\nreturn model.encode(texto)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["Texto vacío"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 43,
+      "tipo": "modify_function",
+      "nivel": "dificil",
+      "enunciado": "Modifica la búsqueda para permitir cambiar dinámicamente entre distancia coseno y euclidiana.",
+      "codigo_base": "index = faiss.IndexFlatL2(dimension)",
+      "respuesta": {
+        "codigo": "if modo == 'l2':\n    index = faiss.IndexFlatL2(dimension)\nelse:\n    index = faiss.IndexFlatIP(dimension)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["IndexFlatIP"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 44,
+      "tipo": "write_function",
+      "nivel": "dificil",
+      "enunciado": "Implementa una función que genere estadísticas de búsquedas realizadas.",
+      "respuesta": {
+        "codigo": "def estadisticas(logs):\n    return {\n        'total_busquedas': len(logs)\n    }",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["total_busquedas"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 45,
+      "tipo": "fix_function",
+      "nivel": "dificil",
+      "enunciado": "Corrige el código para reconstruir automáticamente el índice después de eliminar textos.",
+      "codigo_base": "self.base.remove(texto)",
+      "respuesta": {
+        "codigo": "self.base.remove(texto)\nself.index, self.vectores = construir_indice(self.base)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["construir_indice"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 46,
+      "tipo": "modify_function",
+      "nivel": "dificil",
+      "enunciado": "Modifica el sistema para registrar queries fallidas o sin resultados.",
+      "codigo_base": "return resultados",
+      "respuesta": {
+        "codigo": "if not resultados:\n    self.logs.append({'query': query, 'status':'sin_resultados'})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["sin_resultados"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 47,
+      "tipo": "write_function",
+      "nivel": "dificil",
+      "enunciado": "Implementa una función que compare dos queries y determine cuál tiene resultados más precisos.",
+      "respuesta": {
+        "codigo": "def comparar(q1,q2,sistema):\n    r1 = sistema.buscar(q1)\n    r2 = sistema.buscar(q2)\n    return max(r1[0]['score'], r2[0]['score'])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["score"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 48,
+      "tipo": "fix_function",
+      "nivel": "dificil",
+      "enunciado": "Corrige el código para evitar NaN cuando los embeddings contienen valores inválidos.",
+      "codigo_base": "score = np.dot(v1,v2)",
+      "respuesta": {
+        "codigo": "score = np.nan_to_num(np.dot(v1,v2))",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["nan_to_num"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 49,
+      "tipo": "modify_function",
+      "nivel": "dificil",
+      "enunciado": "Modifica el sistema para soportar múltiples dominios semánticos separados.",
+      "codigo_base": "self.base = base",
+      "respuesta": {
+        "codigo": "self.dominios = {\n    'general': base\n}",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["dominios"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 50,
+      "tipo": "write_function",
+      "nivel": "dificil",
+      "enunciado": "Implementa una función que permita guardar y cargar el índice FAISS desde disco.",
+      "respuesta": {
+        "codigo": "faiss.write_index(index,'indice.faiss')\nindex = faiss.read_index('indice.faiss')",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["write_index", "read_index"],
+          "wildcard": true
+        }
+      }
+    }
+  ]
