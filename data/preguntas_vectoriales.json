@@ -1,734 +1,731 @@
-[
+{
+  "ejercicios": [
+
     {
       "id": 1,
-      "tipo": "write_function",
+      "tipo": "modify_dataset",
       "nivel": "facil",
-      "enunciado": "Implementa la función embedding(texto) para generar embeddings usando SentenceTransformer y devolver un numpy array float32.",
+      "enunciado": "Agregue al vocabulario los textos 'tigre salvaje asiático' y 'león africano grande'. Luego ejecute una búsqueda usando la query 'felino'. Analice cómo cambian los resultados.",
       "respuesta": {
-        "codigo": "def embedding(texto):\n    return model.encode(texto).astype('float32')",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["model.encode", "astype"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Inserción correcta de textos",
+          "Reconstrucción válida del índice",
+          "Uso correcto de búsqueda",
+          "Interpretación semántica básica"
+        ]
       }
     },
+
     {
       "id": 2,
-      "tipo": "fix_function",
+      "tipo": "analyze_results",
       "nivel": "facil",
-      "enunciado": "Corrige la función para que reshape funcione correctamente antes de buscar en FAISS.",
-      "codigo_base": "def buscar(query,index):\n    q = embedding(query)\n    return index.search(q,3)",
+      "enunciado": "Ejecute búsquedas usando las queries 'vehículo rápido' y 'coche deportivo'. Compare los resultados obtenidos y explique cuál query parece más específica.",
       "respuesta": {
-        "codigo": "def buscar(query,index):\n    q = embedding(query).reshape(1,-1)\n    return index.search(q,3)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["reshape"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Ejecución correcta de búsquedas",
+          "Comparación de rankings",
+          "Interpretación contextual"
+        ]
       }
     },
+
     {
       "id": 3,
-      "tipo": "modify_function",
+      "tipo": "modify_dataset",
       "nivel": "facil",
-      "enunciado": "Modifica la función buscar para permitir configurar el parámetro k.",
-      "codigo_base": "def buscar(query, base, index):\n    q = embedding(query).reshape(1,-1)\n    return index.search(q,3)",
+      "enunciado": "Agregue al vocabulario los textos 'banco de inversión internacional' y 'banco para descansar'. Luego busque la palabra 'banco' y explique los casos de ambigüedad encontrados.",
       "respuesta": {
-        "codigo": "def buscar(query, base, index, k=3):\n    q = embedding(query).reshape(1,-1)\n    return index.search(q,k)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["k=3", "search(q,k)"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Inserción correcta",
+          "Detección de ambigüedad",
+          "Interpretación semántica"
+        ]
       }
     },
+
     {
       "id": 4,
-      "tipo": "write_function",
+      "tipo": "compare_queries",
       "nivel": "facil",
-      "enunciado": "Implementa una función que calcule score usando la fórmula 1 / (1 + distancia).",
+      "enunciado": "Ejecute búsquedas usando 'pizza', 'pizza italiana' y 'pizza italiana tradicional'. Explique cómo cambia el ranking al agregar más contexto.",
       "respuesta": {
-        "codigo": "def calcular_score(distancia):\n    return 1 / (1 + distancia)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["1 / (1 + distancia)"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Comparación correcta",
+          "Análisis contextual",
+          "Interpretación del embedding"
+        ]
       }
     },
+
     {
       "id": 5,
-      "tipo": "fix_function",
+      "tipo": "modify_function",
       "nivel": "facil",
-      "enunciado": "Corrige la función para crear correctamente un índice FAISS usando la dimensión de los embeddings.",
-      "codigo_base": "dimension = vectores.shape[0]\nindex = faiss.IndexFlatL2(dimension)",
+      "enunciado": "Modifique la función buscar() para que también devuelva el índice original del texto encontrado.",
+      "codigo_base": "resultados.append({'texto': base[i], 'distancia': distancia, 'score': score})",
       "respuesta": {
-        "codigo": "dimension = vectores.shape[1]\nindex = faiss.IndexFlatL2(dimension)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["shape[1]"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Uso correcto del índice",
+          "Modificación funcional",
+          "Estructura válida del resultado"
+        ]
       }
     },
+
     {
       "id": 6,
-      "tipo": "modify_function",
+      "tipo": "analyze_results",
       "nivel": "facil",
-      "enunciado": "Modifica la función buscar para devolver también la distancia obtenida desde FAISS.",
-      "codigo_base": "resultados.append({\"texto\": base[i]})",
+      "enunciado": "Ejecute búsquedas usando la query 'animal'. Explique por qué algunos resultados parecen menos precisos.",
       "respuesta": {
-        "codigo": "resultados.append({\"texto\": base[i], \"distancia\": distancia})",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["distancia"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Análisis de resultados",
+          "Interpretación de ambigüedad",
+          "Relación con contexto"
+        ]
       }
     },
+
     {
       "id": 7,
-      "tipo": "write_function",
+      "tipo": "modify_dataset",
       "nivel": "facil",
-      "enunciado": "Implementa una función que reconstruya completamente el índice después de agregar un nuevo texto.",
+      "enunciado": "Inserte en el vocabulario textos relacionados con astronomía y luego ejecute búsquedas sobre animales. Explique cómo afecta esto al sistema.",
       "respuesta": {
-        "codigo": "def agregar(self,texto):\n    self.base.append(texto)\n    self.index, self.vectores = construir_indice(self.base)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["append", "construir_indice"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Inserción válida",
+          "Análisis de contaminación semántica",
+          "Interpretación del ranking"
+        ]
       }
     },
+
     {
       "id": 8,
-      "tipo": "fix_function",
+      "tipo": "complete_function",
       "nivel": "facil",
-      "enunciado": "Corrige la búsqueda para que use correctamente el embedding de la query.",
-      "codigo_base": "q = query.reshape(1,-1)",
+      "enunciado": "Complete la función calcular_score() usando la fórmula 1 / (1 + distancia).",
+      "codigo_base": "def calcular_score(distancia):\n    # completar",
       "respuesta": {
-        "codigo": "q = embedding(query).reshape(1,-1)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["embedding(query)"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Implementación correcta",
+          "Uso válido de distancia",
+          "Retorno funcional"
+        ]
       }
     },
+
     {
       "id": 9,
-      "tipo": "modify_function",
-      "nivel": "medio",
-      "enunciado": "Modifica buscar_filtrado para aceptar un parámetro k configurable.",
-      "codigo_base": "def buscar_filtrado(self, query, umbral=0.5):\n    resultados = self.buscar(query,5)",
+      "tipo": "compare_queries",
+      "nivel": "facil",
+      "enunciado": "Compare resultados entre las queries 'tecnología' y 'computadora portátil moderna'. Explique cuál produce resultados más específicos.",
       "respuesta": {
-        "codigo": "def buscar_filtrado(self, query, umbral=0.5, k=5):\n    resultados = self.buscar(query,k)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["k=5", "buscar(query,k)"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Comparación válida",
+          "Interpretación contextual",
+          "Relación entre especificidad y embedding"
+        ]
       }
     },
+
     {
       "id": 10,
-      "tipo": "write_function",
-      "nivel": "medio",
-      "enunciado": "Implementa una función que compare dos queries y devuelva cuál tiene mayor similitud con un texto base.",
+      "tipo": "modify_dataset",
+      "nivel": "facil",
+      "enunciado": "Agregue tres tipos distintos de comida al vocabulario y ejecute búsquedas usando la palabra 'comida'. Explique cómo aparecen agrupaciones semánticas.",
       "respuesta": {
-        "codigo": "def comparar(q1,q2,texto,index,base):\n    r1 = buscar(q1,base,index,1)\n    r2 = buscar(q2,base,index,1)\n    return r1 if r1[0]['score'] > r2[0]['score'] else r2",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["score"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Inserción correcta",
+          "Uso válido de búsquedas",
+          "Interpretación de similitud"
+        ]
       }
     },
+
     {
       "id": 11,
-      "tipo": "fix_function",
-      "nivel": "medio",
-      "enunciado": "Corrige el código para evitar error por embeddings vacíos.",
-      "codigo_base": "vectores = np.array([embedding(t) for t in base])",
+      "tipo": "analyze_results",
+      "nivel": "facil",
+      "enunciado": "Ejecute búsquedas usando la query 'objeto'. Explique por qué el sistema devuelve resultados débiles o ambiguos.",
       "respuesta": {
-        "codigo": "vectores = np.array([embedding(t) for t in base if t.strip()])",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["if t.strip()"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Interpretación de baja especificidad",
+          "Relación con embeddings",
+          "Análisis contextual"
+        ]
       }
     },
+
     {
       "id": 12,
       "tipo": "modify_function",
-      "nivel": "medio",
-      "enunciado": "Modifica la búsqueda para ordenar resultados por score descendente.",
-      "codigo_base": "return resultados",
+      "nivel": "facil",
+      "enunciado": "Modifique la función buscar() para que imprima también la distancia encontrada por FAISS.",
+      "codigo_base": "resultados.append({'texto': base[i], 'score': score})",
       "respuesta": {
-        "codigo": "return sorted(resultados, key=lambda x: x['score'], reverse=True)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["sorted", "reverse=True"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Uso correcto de distancia",
+          "Modificación funcional",
+          "Resultado válido"
+        ]
       }
     },
+
     {
       "id": 13,
-      "tipo": "write_function",
-      "nivel": "medio",
-      "enunciado": "Implementa una función que detecte resultados ambiguos cuando dos scores sean muy parecidos.",
+      "tipo": "compare_queries",
+      "nivel": "facil",
+      "enunciado": "Compare búsquedas usando 'ratón' y 'ratón inalámbrico computadora'. Explique diferencias semánticas observadas.",
       "respuesta": {
-        "codigo": "def ambiguo(resultados, margen=0.05):\n    return abs(resultados[0]['score'] - resultados[1]['score']) < margen",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["abs", "score"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Comparación correcta",
+          "Análisis de ambigüedad",
+          "Interpretación contextual"
+        ]
       }
     },
+
     {
       "id": 14,
-      "tipo": "fix_function",
-      "nivel": "medio",
-      "enunciado": "Corrige el cálculo de score para que disminuya cuando aumenta la distancia.",
-      "codigo_base": "score = distancia",
+      "tipo": "modify_dataset",
+      "nivel": "facil",
+      "enunciado": "Agregue palabras relacionadas con deportes y luego busque 'vehículo rápido'. Analice si aparecen resultados inesperados.",
       "respuesta": {
-        "codigo": "score = 1 / (1 + distancia)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["1 / (1 + distancia)"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Inserción correcta",
+          "Análisis de contaminación",
+          "Interpretación del ranking"
+        ]
       }
     },
+
     {
       "id": 15,
-      "tipo": "modify_function",
-      "nivel": "medio",
-      "enunciado": "Modifica la clase BuscadorSemantico para agregar logging de las queries realizadas.",
-      "codigo_base": "class BuscadorSemantico:\n    def __init__(self, base):\n        self.base = base",
+      "tipo": "complete_function",
+      "nivel": "facil",
+      "enunciado": "Complete una función que reciba una query y ejecute embedding(query).",
+      "codigo_base": "def generar_query(query):\n    # completar",
       "respuesta": {
-        "codigo": "class BuscadorSemantico:\n    def __init__(self, base):\n        self.base = base\n        self.logs = []\n\n    def buscar(self, query, k=3):\n        self.logs.append(query)\n        return buscar(query, self.base, self.index, k)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["logs.append"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Uso correcto de embedding",
+          "Implementación funcional",
+          "Retorno válido"
+        ]
       }
     },
+
     {
       "id": 16,
-      "tipo": "write_function",
-      "nivel": "medio",
-      "enunciado": "Implementa una función que devuelva únicamente los textos encontrados sin incluir score ni distancia.",
+      "tipo": "analyze_results",
+      "nivel": "facil",
+      "enunciado": "Ejecute búsquedas usando 'galaxia' y explique por qué aparecen ciertos resultados cercanos aunque no sean exactos.",
       "respuesta": {
-        "codigo": "def solo_textos(resultados):\n    return [r['texto'] for r in resultados]",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["texto"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Interpretación geométrica",
+          "Relación entre proximidad y significado",
+          "Análisis semántico"
+        ]
       }
     },
+
     {
       "id": 17,
-      "tipo": "fix_function",
-      "nivel": "medio",
-      "enunciado": "Corrige el código para evitar resultados repetidos en la búsqueda.",
-      "codigo_base": "resultados.append(base[i])",
+      "tipo": "modify_dataset",
+      "nivel": "facil",
+      "enunciado": "Agregue textos relacionados con videojuegos y luego ejecute búsquedas usando 'tecnología'. Explique el comportamiento del sistema.",
       "respuesta": {
-        "codigo": "if base[i] not in resultados:\n    resultados.append(base[i])",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["not in resultados"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Inserción correcta",
+          "Relación entre dominios",
+          "Interpretación semántica"
+        ]
       }
     },
+
     {
       "id": 18,
       "tipo": "modify_function",
-      "nivel": "medio",
-      "enunciado": "Modifica el sistema para aceptar múltiples queries y devolver un resultado consolidado.",
-      "codigo_base": "def buscar(self, query, k=3):",
+      "nivel": "facil",
+      "enunciado": "Modifique la función buscar_filtrado() para usar un umbral mínimo de 0.5.",
+      "codigo_base": "if r['score'] >= umbral:",
       "respuesta": {
-        "codigo": "def buscar_multiple(self, queries, k=3):\n    resultados = []\n    for q in queries:\n        resultados.extend(self.buscar(q,k))\n    return resultados",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["for q in queries"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Uso correcto de umbral",
+          "Filtrado válido",
+          "Modificación funcional"
+        ]
       }
     },
+
     {
       "id": 19,
-      "tipo": "write_function",
-      "nivel": "medio",
-      "enunciado": "Implementa una función que calcule similitud manual usando distancia euclidiana.",
+      "tipo": "compare_queries",
+      "nivel": "facil",
+      "enunciado": "Compare resultados entre las queries 'felino' y 'felino salvaje africano'. Explique cómo cambia el contexto.",
       "respuesta": {
-        "codigo": "def similitud(v1,v2):\n    distancia = np.linalg.norm(v1-v2)\n    return 1/(1+distancia)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["np.linalg.norm"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Comparación contextual",
+          "Interpretación semántica",
+          "Análisis de especificidad"
+        ]
       }
     },
+
     {
       "id": 20,
-      "tipo": "fix_function",
-      "nivel": "medio",
-      "enunciado": "Corrige la función para convertir correctamente embeddings a float32 antes de agregar al índice.",
-      "codigo_base": "vectores = np.array([embedding(t) for t in base])",
+      "tipo": "analyze_results",
+      "nivel": "facil",
+      "enunciado": "Ejecute búsquedas usando 'computadora'. Explique por qué algunos resultados tecnológicos tienen scores más altos que otros.",
       "respuesta": {
-        "codigo": "vectores = np.array([embedding(t) for t in base]).astype('float32')",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["astype('float32')"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Interpretación de score",
+          "Relación semántica",
+          "Análisis del ranking"
+        ]
       }
     },
+
     {
       "id": 21,
       "tipo": "modify_function",
       "nivel": "medio",
-      "enunciado": "Modifica la función buscar para devolver también el índice original del texto encontrado.",
-      "codigo_base": "resultados.append({'texto': base[i]})",
+      "enunciado": "Modifique la función buscar() para que los resultados se devuelvan ordenados por score descendente.",
+      "codigo_base": "return resultados",
       "respuesta": {
-        "codigo": "resultados.append({'texto': base[i], 'indice': int(i)})",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["indice"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Ordenamiento correcto",
+          "Uso válido de score",
+          "No alterar búsqueda FAISS"
+        ]
       }
     },
+
     {
       "id": 22,
-      "tipo": "write_function",
-      "nivel": "dificil",
-      "enunciado": "Implementa una función que compare búsqueda lineal contra búsqueda FAISS y mida tiempo de ejecución.",
+      "tipo": "extend_system",
+      "nivel": "medio",
+      "enunciado": "Implemente una función que permita agregar nuevos textos al vocabulario y reconstruir automáticamente el índice FAISS.",
+      "codigo_base": "def agregar(self, texto):\n    # completar",
       "respuesta": {
-        "codigo": "import time\n\ndef benchmark(query,base,index):\n    inicio = time.time()\n    buscar(query,base,index)\n    fin = time.time()\n    return fin-inicio",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["time.time"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Inserción dinámica correcta",
+          "Reconstrucción válida del índice",
+          "Actualización funcional del sistema"
+        ]
       }
     },
+
     {
       "id": 23,
-      "tipo": "fix_function",
-      "nivel": "dificil",
-      "enunciado": "Corrige el error de dimensiones incompatibles antes de insertar embeddings en FAISS.",
-      "codigo_base": "index.add(vectores[0])",
+      "tipo": "analyze_results",
+      "nivel": "medio",
+      "enunciado": "Ejecute búsquedas usando las queries 'automóvil', 'coche', 'vehículo' y 'carro'. Compare diferencias de ranking y similitud.",
       "respuesta": {
-        "codigo": "index.add(vectores)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["index.add(vectores)"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Comparación semántica",
+          "Interpretación lingüística",
+          "Análisis contextual"
+        ]
       }
     },
+
     {
       "id": 24,
       "tipo": "modify_function",
-      "nivel": "dificil",
-      "enunciado": "Modifica el sistema para permitir eliminar textos y reconstruir el índice.",
-      "codigo_base": "self.base.append(texto)",
+      "nivel": "medio",
+      "enunciado": "Modifique la función buscar_filtrado() para permitir que el usuario envíe el valor de k dinámicamente.",
+      "codigo_base": "def buscar_filtrado(query, base, index, umbral=0.3, k=5):",
       "respuesta": {
-        "codigo": "def eliminar(self,texto):\n    self.base.remove(texto)\n    self.index, self.vectores = construir_indice(self.base)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["remove", "construir_indice"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Uso dinámico de k",
+          "Filtrado funcional",
+          "Modificación correcta de parámetros"
+        ]
       }
     },
+
     {
       "id": 25,
-      "tipo": "write_function",
-      "nivel": "dificil",
-      "enunciado": "Implementa una función que detecte queries fuera de dominio usando score mínimo.",
+      "tipo": "compare_queries",
+      "nivel": "medio",
+      "enunciado": "Compare resultados entre una query de una palabra y una frase larga relacionada. Explique cómo cambia el embedding.",
       "respuesta": {
-        "codigo": "def fuera_de_dominio(resultados, umbral=0.3):\n    return resultados[0]['score'] < umbral",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["score"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Comparación contextual",
+          "Interpretación de embeddings",
+          "Relación entre contexto y ranking"
+        ]
       }
     },
+
     {
       "id": 26,
-      "tipo": "fix_function",
-      "nivel": "dificil",
-      "enunciado": "Corrige el código para evitar error cuando k es mayor que el tamaño de la base.",
-      "codigo_base": "distancias, indices = index.search(q,k)",
+      "tipo": "extend_system",
+      "nivel": "medio",
+      "enunciado": "Implemente una función que exporte los resultados de búsqueda a un diccionario JSON con texto, score y distancia.",
+      "codigo_base": "def exportar_resultados(resultados):\n    # completar",
       "respuesta": {
-        "codigo": "k = min(k, len(base))\ndistancias, indices = index.search(q,k)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["min(k, len(base))"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Exportación correcta",
+          "Formato JSON válido",
+          "Persistencia estructurada"
+        ]
       }
     },
+
     {
       "id": 27,
-      "tipo": "modify_function",
-      "nivel": "dificil",
-      "enunciado": "Modifica la búsqueda para filtrar resultados por score mínimo configurable.",
-      "codigo_base": "return resultados",
+      "tipo": "analyze_results",
+      "nivel": "medio",
+      "enunciado": "Inserte varios textos muy similares y analice cómo cambia el ranking cuando existen múltiples embeddings cercanos.",
       "respuesta": {
-        "codigo": "return [r for r in resultados if r['score'] >= min_score]",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["min_score"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Inserción válida",
+          "Interpretación de saturación semántica",
+          "Análisis de ambigüedad"
+        ]
       }
     },
+
     {
       "id": 28,
-      "tipo": "write_function",
-      "nivel": "dificil",
-      "enunciado": "Implementa una función que agrupe resultados semánticamente similares.",
+      "tipo": "modify_dataset",
+      "nivel": "medio",
+      "enunciado": "Agregue frases extremadamente largas al vocabulario y compare los resultados contra frases cortas.",
       "respuesta": {
-        "codigo": "def agrupar(resultados, umbral=0.8):\n    grupos = []\n    for r in resultados:\n        if r['score'] >= umbral:\n            grupos.append(r)\n    return grupos",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["umbral"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Inserción válida",
+          "Análisis contextual",
+          "Interpretación de embeddings largos"
+        ]
       }
     },
+
     {
       "id": 29,
-      "tipo": "fix_function",
-      "nivel": "dificil",
-      "enunciado": "Corrige el código para reconstruir el índice después de insertar múltiples textos.",
-      "codigo_base": "self.base.extend(textos)",
+      "tipo": "modify_function",
+      "nivel": "medio",
+      "enunciado": "Cambie la fórmula de score por una nueva función distinta a 1/(1+distancia) y compare resultados.",
+      "codigo_base": "score = 1 / (1 + distancia)",
       "respuesta": {
-        "codigo": "self.base.extend(textos)\nself.index, self.vectores = construir_indice(self.base)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["extend", "construir_indice"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Modificación funcional",
+          "Comparación de comportamiento",
+          "Interpretación matemática básica"
+        ]
       }
     },
+
     {
       "id": 30,
-      "tipo": "modify_function",
-      "nivel": "dificil",
-      "enunciado": "Modifica la clase BuscadorSemantico para almacenar historial completo de búsquedas con timestamp.",
-      "codigo_base": "self.logs.append(query)",
+      "tipo": "compare_queries",
+      "nivel": "medio",
+      "enunciado": "Compare búsquedas usando 'animal peligroso', 'felino peligroso' y 'felino salvaje africano peligroso'.",
       "respuesta": {
-        "codigo": "from datetime import datetime\nself.logs.append({\n    'query': query,\n    'timestamp': datetime.now().isoformat()\n})",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["datetime.now", "timestamp"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Comparación contextual",
+          "Interpretación de especificidad",
+          "Análisis semántico"
+        ]
       }
     },
+
     {
       "id": 31,
-      "tipo": "write_function",
-      "nivel": "facil",
-      "enunciado": "Implementa una función que muestre únicamente los scores de los resultados encontrados.",
+      "tipo": "extend_system",
+      "nivel": "medio",
+      "enunciado": "Implemente una función que registre cada búsqueda junto con su timestamp y score máximo.",
+      "codigo_base": "def registrar_busqueda(query, score):\n    # completar",
       "respuesta": {
-        "codigo": "def obtener_scores(resultados):\n    return [r['score'] for r in resultados]",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["score"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Logging correcto",
+          "Persistencia funcional",
+          "Uso válido de score"
+        ]
       }
     },
+
     {
       "id": 32,
-      "tipo": "fix_function",
-      "nivel": "facil",
-      "enunciado": "Corrige el código para evitar acceder a índices inexistentes.",
-      "codigo_base": "return base[indices[0][5]]",
+      "tipo": "analyze_results",
+      "nivel": "medio",
+      "enunciado": "Ejecute búsquedas con errores ortográficos intencionales y explique cómo responde el sistema.",
       "respuesta": {
-        "codigo": "if len(indices[0]) > 5:\n    return base[indices[0][5]]",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["len(indices[0])"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Pruebas válidas",
+          "Análisis de robustez",
+          "Interpretación de limitaciones"
+        ]
       }
     },
+
     {
       "id": 33,
       "tipo": "modify_function",
-      "nivel": "facil",
-      "enunciado": "Modifica la búsqueda para devolver resultados ordenados por score descendente.",
-      "codigo_base": "return resultados",
+      "nivel": "medio",
+      "enunciado": "Modifique la función buscar() para mostrar únicamente resultados cuyo score sea mayor a 0.4.",
+      "codigo_base": "for j, i in enumerate(indices[0]):",
       "respuesta": {
-        "codigo": "return sorted(resultados, key=lambda x: x['score'], reverse=True)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["reverse=True"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Filtrado correcto",
+          "Uso válido de score",
+          "No romper la búsqueda"
+        ]
       }
     },
+
     {
       "id": 34,
-      "tipo": "write_function",
+      "tipo": "extend_system",
       "nivel": "medio",
-      "enunciado": "Implementa una función que permita buscar múltiples queries y agrupar resultados por query.",
+      "enunciado": "Implemente una función que permita buscar únicamente dentro de una categoría específica como animales o tecnología.",
+      "codigo_base": "def buscar_categoria(query, categoria):\n    # completar",
       "respuesta": {
-        "codigo": "def buscar_grupo(queries, sistema):\n    salida = {}\n    for q in queries:\n        salida[q] = sistema.buscar(q)\n    return salida",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["for q in queries"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Filtrado correcto por categoría",
+          "Separación de dominios",
+          "Implementación funcional"
+        ]
       }
     },
+
     {
       "id": 35,
-      "tipo": "fix_function",
+      "tipo": "compare_queries",
       "nivel": "medio",
-      "enunciado": "Corrige el código para convertir correctamente el embedding de query antes de buscar.",
-      "codigo_base": "q = embedding(query)",
+      "enunciado": "Compare resultados usando IndexFlatL2 e IndexFlatIP. Explique diferencias observadas.",
       "respuesta": {
-        "codigo": "q = embedding(query).reshape(1,-1)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["reshape"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Cambio correcto de índice",
+          "Comparación válida",
+          "Interpretación geométrica"
+        ]
       }
     },
+
     {
       "id": 36,
-      "tipo": "modify_function",
+      "tipo": "modify_dataset",
       "nivel": "medio",
-      "enunciado": "Modifica el sistema para agregar logs automáticos de inserción de textos.",
-      "codigo_base": "self.base.append(texto)",
+      "enunciado": "Agregue textos de múltiples dominios como política, cocina y videojuegos. Analice contaminación semántica.",
       "respuesta": {
-        "codigo": "self.base.append(texto)\nprint(f'Texto agregado: {texto}')",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["Texto agregado"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Inserción válida",
+          "Análisis de contaminación",
+          "Interpretación contextual"
+        ]
       }
     },
+
     {
       "id": 37,
-      "tipo": "write_function",
+      "tipo": "extend_system",
       "nivel": "medio",
-      "enunciado": "Implementa una función que calcule distancia promedio entre resultados encontrados.",
+      "enunciado": "Implemente una función que calcule similitud entre dos textos usando embeddings sin utilizar FAISS.",
+      "codigo_base": "def similitud(texto1, texto2):\n    # completar",
       "respuesta": {
-        "codigo": "def distancia_promedio(resultados):\n    return sum(r['distancia'] for r in resultados)/len(resultados)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["distancia"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Uso correcto de embeddings",
+          "Cálculo válido de similitud",
+          "Interpretación funcional"
+        ]
       }
     },
+
     {
       "id": 38,
-      "tipo": "fix_function",
+      "tipo": "analyze_results",
       "nivel": "medio",
-      "enunciado": "Corrige el código para evitar división por cero al calcular score.",
-      "codigo_base": "score = 1/(distancia)",
+      "enunciado": "Analice casos donde scores altos producen resultados incorrectos o inesperados.",
       "respuesta": {
-        "codigo": "score = 1/(1+distancia)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["1+distancia"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Identificación de anomalías",
+          "Interpretación geométrica",
+          "Análisis de limitaciones"
+        ]
       }
     },
+
     {
       "id": 39,
       "tipo": "modify_function",
       "nivel": "medio",
-      "enunciado": "Modifica la clase para permitir exportar la base completa en formato JSON.",
-      "codigo_base": "return self.base",
+      "enunciado": "Modifique la función buscar() para devolver también la categoría del texto encontrado.",
+      "codigo_base": "resultados.append({'texto': base[i]})",
       "respuesta": {
-        "codigo": "import json\n\ndef exportar(self):\n    return json.dumps(self.base, ensure_ascii=False)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["json.dumps"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Integración correcta de categorías",
+          "Modificación funcional",
+          "Resultados estructurados"
+        ]
       }
     },
+
     {
       "id": 40,
-      "tipo": "write_function",
+      "tipo": "compare_queries",
       "nivel": "medio",
-      "enunciado": "Implementa una función que filtre resultados cuyo texto contenga una palabra específica.",
+      "enunciado": "Compare el comportamiento del sistema usando bases pequeñas especializadas frente a bases grandes mezcladas.",
       "respuesta": {
-        "codigo": "def filtrar_palabra(resultados, palabra):\n    return [r for r in resultados if palabra in r['texto']]",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["palabra in r['texto']"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Comparación válida",
+          "Análisis de especialización",
+          "Interpretación de ruido semántico"
+        ]
       }
     },
+
     {
       "id": 41,
-      "tipo": "write_function",
+      "tipo": "extend_system",
       "nivel": "dificil",
-      "enunciado": "Implementa una función que detecte posibles ambigüedades semánticas cuando múltiples resultados tienen scores similares.",
+      "enunciado": "Implemente una función llamada buscar_multidominio() que permita recibir una query y retornar resultados agrupados por categoría ('animales', 'vehículos', 'tecnología'). El sistema debe filtrar resultados con score menor a 0.4.",
+      "codigo_base": "def buscar_multidominio(query):\n    # completar",
       "respuesta": {
-        "codigo": "def detectar_ambiguedad(resultados, margen=0.05):\n    return abs(resultados[0]['score'] - resultados[1]['score']) < margen",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["margen"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Agrupación correcta por categoría",
+          "Filtrado válido",
+          "Uso correcto de score",
+          "Estructura funcional"
+        ]
       }
     },
+
     {
       "id": 42,
-      "tipo": "fix_function",
+      "tipo": "extend_system",
       "nivel": "dificil",
-      "enunciado": "Corrige el código para evitar embeddings vacíos.",
-      "codigo_base": "return model.encode(texto)",
+      "enunciado": "Implemente persistencia completa del índice FAISS utilizando escritura y lectura desde disco.",
+      "codigo_base": "faiss.write_index(index, 'indice.faiss')",
       "respuesta": {
-        "codigo": "if not texto.strip():\n    raise ValueError('Texto vacío')\nreturn model.encode(texto)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["Texto vacío"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Persistencia funcional",
+          "Carga correcta del índice",
+          "Reutilización válida del sistema"
+        ]
       }
     },
+
     {
       "id": 43,
       "tipo": "modify_function",
       "nivel": "dificil",
-      "enunciado": "Modifica la búsqueda para permitir cambiar dinámicamente entre distancia coseno y euclidiana.",
-      "codigo_base": "index = faiss.IndexFlatL2(dimension)",
+      "enunciado": "Modifique el sistema para detectar posibles queries fuera de dominio utilizando score promedio mínimo.",
+      "codigo_base": "def detectar_fuera_dominio(query):\n    # completar",
       "respuesta": {
-        "codigo": "if modo == 'l2':\n    index = faiss.IndexFlatL2(dimension)\nelse:\n    index = faiss.IndexFlatIP(dimension)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["IndexFlatIP"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Uso correcto de score",
+          "Detección funcional",
+          "Interpretación de umbrales"
+        ]
       }
     },
+
     {
       "id": 44,
-      "tipo": "write_function",
+      "tipo": "extend_system",
       "nivel": "dificil",
-      "enunciado": "Implementa una función que genere estadísticas de búsquedas realizadas.",
+      "enunciado": "Implemente una función que elimine textos del vocabulario y reconstruya completamente el índice FAISS.",
+      "codigo_base": "def eliminar(texto):\n    # completar",
       "respuesta": {
-        "codigo": "def estadisticas(logs):\n    return {\n        'total_busquedas': len(logs)\n    }",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["total_busquedas"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Eliminación correcta",
+          "Reconstrucción válida",
+          "Consistencia del índice"
+        ]
       }
     },
+
     {
       "id": 45,
-      "tipo": "fix_function",
+      "tipo": "analyze_results",
       "nivel": "dificil",
-      "enunciado": "Corrige el código para reconstruir automáticamente el índice después de eliminar textos.",
-      "codigo_base": "self.base.remove(texto)",
+      "enunciado": "Analice por qué dos textos semánticamente distintos pueden terminar geométricamente cercanos dentro del espacio vectorial.",
       "respuesta": {
-        "codigo": "self.base.remove(texto)\nself.index, self.vectores = construir_indice(self.base)",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["construir_indice"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Interpretación geométrica",
+          "Comprensión de embeddings",
+          "Análisis de limitaciones semánticas"
+        ]
       }
     },
+
     {
       "id": 46,
-      "tipo": "modify_function",
+      "tipo": "extend_system",
       "nivel": "dificil",
-      "enunciado": "Modifica el sistema para registrar queries fallidas o sin resultados.",
-      "codigo_base": "return resultados",
+      "enunciado": "Construya un mini recomendador semántico que sugiera textos similares a partir del historial de búsquedas realizadas.",
+      "codigo_base": "historial = []",
       "respuesta": {
-        "codigo": "if not resultados:\n    self.logs.append({'query': query, 'status':'sin_resultados'})",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["sin_resultados"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Uso correcto de historial",
+          "Recomendación funcional",
+          "Aplicación de similitud semántica"
+        ]
       }
     },
+
     {
       "id": 47,
-      "tipo": "write_function",
-      "nivel": "dificil",
-      "enunciado": "Implementa una función que compare dos queries y determine cuál tiene resultados más precisos.",
-      "respuesta": {
-        "codigo": "def comparar(q1,q2,sistema):\n    r1 = sistema.buscar(q1)\n    r2 = sistema.buscar(q2)\n    return max(r1[0]['score'], r2[0]['score'])",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["score"],
-          "wildcard": true
-        }
-      }
-    },
-    {
-      "id": 48,
-      "tipo": "fix_function",
-      "nivel": "dificil",
-      "enunciado": "Corrige el código para evitar NaN cuando los embeddings contienen valores inválidos.",
-      "codigo_base": "score = np.dot(v1,v2)",
-      "respuesta": {
-        "codigo": "score = np.nan_to_num(np.dot(v1,v2))",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["nan_to_num"],
-          "wildcard": true
-        }
-      }
-    },
-    {
-      "id": 49,
       "tipo": "modify_function",
       "nivel": "dificil",
-      "enunciado": "Modifica el sistema para soportar múltiples dominios semánticos separados.",
-      "codigo_base": "self.base = base",
+      "enunciado": "Modifique buscar_filtrado() para calcular dinámicamente el umbral usando el score promedio de los resultados.",
+      "codigo_base": "def buscar_filtrado(query, base, index, umbral=0.3, k=5):",
       "respuesta": {
-        "codigo": "self.dominios = {\n    'general': base\n}",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["dominios"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Cálculo dinámico correcto",
+          "Uso válido de promedio",
+          "Filtrado funcional"
+        ]
       }
     },
+
+    {
+      "id": 48,
+      "tipo": "extend_system",
+      "nivel": "dificil",
+      "enunciado": "Implemente una función que compare múltiples queries simultáneamente y devuelva los textos más relevantes para todas ellas.",
+      "codigo_base": "def comparar_queries(queries):\n    # completar",
+      "respuesta": {
+        "criterios": [
+          "Procesamiento múltiple",
+          "Agregación correcta",
+          "Interpretación de relevancia"
+        ]
+      }
+    },
+
+    {
+      "id": 49,
+      "tipo": "analyze_results",
+      "nivel": "dificil",
+      "enunciado": "Compare el comportamiento del sistema usando textos extremadamente cortos frente a descripciones largas y detalladas.",
+      "respuesta": {
+        "criterios": [
+          "Comparación contextual",
+          "Interpretación de embeddings",
+          "Análisis de recuperación semántica"
+        ]
+      }
+    },
+
     {
       "id": 50,
-      "tipo": "write_function",
+      "tipo": "extend_system",
       "nivel": "dificil",
-      "enunciado": "Implementa una función que permita guardar y cargar el índice FAISS desde disco.",
+      "enunciado": "Construya un mini sistema semántico completo que incluya embeddings, índice FAISS, score, filtrado, logging y persistencia básica. Luego explique fortalezas, limitaciones y posibles usos empresariales.",
+      "codigo_base": "class BuscadorSemantico:\n    # extender sistema",
       "respuesta": {
-        "codigo": "faiss.write_index(index,'indice.faiss')\nindex = faiss.read_index('indice.faiss')",
-        "validacion": {
-          "tipo": "estructura",
-          "expected": ["write_index", "read_index"],
-          "wildcard": true
-        }
+        "criterios": [
+          "Integración completa",
+          "Uso correcto de FAISS",
+          "Persistencia funcional",
+          "Logging válido",
+          "Análisis crítico del sistema"
+        ]
       }
     }
   ]
+}
