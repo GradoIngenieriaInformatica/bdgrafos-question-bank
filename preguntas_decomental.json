@@ -1,0 +1,1509 @@
+[
+    {
+      "id": 1,
+      "tipo": "insercion",
+      "nivel": "facil",
+      "tema": "insertOne",
+      "enunciado": "Inserta un documento en la colección estudiantes con nombre Ana y edad 20.",
+      "respuesta": {
+        "query": "db.estudiantes.insertOne({nombre:'Ana',edad:20})",
+        "validacion": {
+          "tipo": "exacta",
+          "expected": "db.estudiantes.insertOne({nombre:'Ana',edad:20})",
+          "wildcard": false
+        }
+      }
+    },
+    {
+      "id": 2,
+      "tipo": "insercion",
+      "nivel": "facil",
+      "tema": "insertMany",
+      "enunciado": "Inserta dos documentos en la colección productos con nombres Teclado y Raton.",
+      "respuesta": {
+        "query": "db.productos.insertMany([{nombre:'Teclado'},{nombre:'Raton'}])",
+        "validacion": {
+          "tipo": "exacta",
+          "expected": "insertMany",
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 3,
+      "tipo": "consulta",
+      "nivel": "facil",
+      "tema": "find",
+      "enunciado": "Obtén todos los documentos de la colección clientes.",
+      "respuesta": {
+        "query": "db.clientes.find()",
+        "validacion": {
+          "tipo": "exacta",
+          "expected": "db.clientes.find()",
+          "wildcard": false
+        }
+      }
+    },
+    {
+      "id": 4,
+      "tipo": "consulta",
+      "nivel": "facil",
+      "tema": "filtros",
+      "enunciado": "Consulta los usuarios cuya edad sea mayor a 18.",
+      "respuesta": {
+        "query": "db.usuarios.find({edad:{$gt:18}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$gt"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 5,
+      "tipo": "consulta",
+      "nivel": "facil",
+      "tema": "proyecciones",
+      "enunciado": "Muestra únicamente el campo nombre de todos los empleados.",
+      "respuesta": {
+        "query": "db.empleados.find({},{nombre:1,_id:0})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["nombre:1","_id:0"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 6,
+      "tipo": "consulta",
+      "nivel": "facil",
+      "tema": "sort",
+      "enunciado": "Ordena los productos por precio de forma ascendente.",
+      "respuesta": {
+        "query": "db.productos.find().sort({precio:1})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["sort"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 7,
+      "tipo": "consulta",
+      "nivel": "facil",
+      "tema": "limit",
+      "enunciado": "Obtén únicamente los primeros 5 documentos de la colección ventas.",
+      "respuesta": {
+        "query": "db.ventas.find().limit(5)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["limit(5)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 8,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "skip",
+      "enunciado": "Omite los primeros 10 documentos de la colección pedidos.",
+      "respuesta": {
+        "query": "db.pedidos.find().skip(10)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["skip(10)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 9,
+      "tipo": "update",
+      "nivel": "facil",
+      "tema": "updateOne",
+      "enunciado": "Actualiza la edad de Ana a 21 en la colección estudiantes.",
+      "respuesta": {
+        "query": "db.estudiantes.updateOne({nombre:'Ana'},{$set:{edad:21}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["updateOne","$set"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 10,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "updateMany",
+      "enunciado": "Actualiza el estado a activo para todos los usuarios.",
+      "respuesta": {
+        "query": "db.usuarios.updateMany({},{$set:{estado:'activo'}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["updateMany","$set"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 11,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "replaceOne",
+      "enunciado": "Reemplaza el documento cuyo nombre es Carlos por un documento con nombre Carlos y edad 30.",
+      "respuesta": {
+        "query": "db.personas.replaceOne({nombre:'Carlos'},{nombre:'Carlos',edad:30})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["replaceOne"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 12,
+      "tipo": "delete",
+      "nivel": "facil",
+      "tema": "deleteOne",
+      "enunciado": "Elimina el documento cuyo nombre es Pedro.",
+      "respuesta": {
+        "query": "db.personas.deleteOne({nombre:'Pedro'})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["deleteOne"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 13,
+      "tipo": "delete",
+      "nivel": "medio",
+      "tema": "deleteMany",
+      "enunciado": "Elimina todos los productos con stock igual a 0.",
+      "respuesta": {
+        "query": "db.productos.deleteMany({stock:0})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["deleteMany"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 14,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "operadores logicos",
+      "enunciado": "Consulta usuarios cuya edad sea mayor a 18 y menor a 30.",
+      "respuesta": {
+        "query": "db.usuarios.find({edad:{$gt:18,$lt:30}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$gt","$lt"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 15,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "operador or",
+      "enunciado": "Consulta productos cuyo precio sea menor a 10 o mayor a 100.",
+      "respuesta": {
+        "query": "db.productos.find({$or:[{precio:{$lt:10}},{precio:{$gt:100}}]})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$or"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 16,
+      "tipo": "aggregation",
+      "nivel": "medio",
+      "tema": "$match",
+      "enunciado": "Usa aggregation para obtener usuarios mayores de 18.",
+      "respuesta": {
+        "query": "db.usuarios.aggregate([{$match:{edad:{$gt:18}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$match"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 17,
+      "tipo": "aggregation",
+      "nivel": "medio",
+      "tema": "$project",
+      "enunciado": "Usa aggregation para mostrar únicamente nombre y edad de los empleados.",
+      "respuesta": {
+        "query": "db.empleados.aggregate([{$project:{_id:0,nombre:1,edad:1}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$project"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 18,
+      "tipo": "aggregation",
+      "nivel": "medio",
+      "tema": "$group",
+      "enunciado": "Agrupa ventas por categoria y calcula el total usando suma.",
+      "respuesta": {
+        "query": "db.ventas.aggregate([{$group:{_id:'$categoria',total:{$sum:'$monto'}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$group","$sum"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 19,
+      "tipo": "aggregation",
+      "nivel": "medio",
+      "tema": "$avg",
+      "enunciado": "Calcula el promedio de edades de la colección usuarios.",
+      "respuesta": {
+        "query": "db.usuarios.aggregate([{$group:{_id:null,promedio:{$avg:'$edad'}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$avg"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 20,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "pipeline completa",
+      "enunciado": "Obtén las 3 categorías con mayor total de ventas usando aggregation.",
+      "respuesta": {
+        "query": "db.ventas.aggregate([{$group:{_id:'$categoria',total:{$sum:'$monto'}}},{$sort:{total:-1}},{$limit:3}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$group","$sort","$limit"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 21,
+      "tipo": "indices",
+      "nivel": "facil",
+      "tema": "indice simple",
+      "enunciado": "Crea un índice ascendente sobre el campo nombre en la colección usuarios.",
+      "respuesta": {
+        "query": "db.usuarios.createIndex({nombre:1})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["createIndex"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 22,
+      "tipo": "indices",
+      "nivel": "medio",
+      "tema": "indice compuesto",
+      "enunciado": "Crea un índice compuesto sobre los campos apellido y edad.",
+      "respuesta": {
+        "query": "db.usuarios.createIndex({apellido:1,edad:-1})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["apellido:1","edad:-1"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 23,
+      "tipo": "indices",
+      "nivel": "medio",
+      "tema": "indice text",
+      "enunciado": "Crea un índice de texto sobre el campo descripcion.",
+      "respuesta": {
+        "query": "db.productos.createIndex({descripcion:'text'})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["text"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 24,
+      "tipo": "indices",
+      "nivel": "medio",
+      "tema": "indice sparse",
+      "enunciado": "Crea un índice sparse sobre el campo telefono.",
+      "respuesta": {
+        "query": "db.clientes.createIndex({telefono:1},{sparse:true})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["sparse:true"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 25,
+      "tipo": "indices",
+      "nivel": "medio",
+      "tema": "indice hashed",
+      "enunciado": "Crea un índice hashed sobre el campo usuarioId.",
+      "respuesta": {
+        "query": "db.sesiones.createIndex({usuarioId:'hashed'})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["hashed"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 26,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "busqueda text",
+      "enunciado": "Realiza una búsqueda de texto para encontrar documentos que contengan la palabra laptop.",
+      "respuesta": {
+        "query": "db.productos.find({$text:{$search:'laptop'}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$text","$search"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 27,
+      "tipo": "explain",
+      "nivel": "medio",
+      "tema": "executionStats",
+      "enunciado": "Muestra el plan de ejecución de una consulta sobre usuarios con edad mayor a 18.",
+      "respuesta": {
+        "query": "db.usuarios.find({edad:{$gt:18}}).explain('executionStats')",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["executionStats"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 28,
+      "tipo": "optimizacion",
+      "nivel": "medio",
+      "tema": "consulta optimizada",
+      "enunciado": "Modifica la consulta para devolver únicamente el campo nombre de usuarios activos.",
+      "query_base": "db.usuarios.find({estado:'activo'})",
+      "respuesta": {
+        "query": "db.usuarios.find({estado:'activo'},{nombre:1,_id:0})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["nombre:1","_id:0"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 29,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "sort y limit",
+      "enunciado": "Obtén los 5 productos más caros.",
+      "respuesta": {
+        "query": "db.productos.find().sort({precio:-1}).limit(5)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["sort","limit"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 30,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "incremento",
+      "enunciado": "Incrementa en 1 el campo stock del producto cuyo nombre es Monitor.",
+      "respuesta": {
+        "query": "db.productos.updateOne({nombre:'Monitor'},{$inc:{stock:1}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$inc"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 31,
+      "tipo": "aggregation",
+      "nivel": "medio",
+      "tema": "$max",
+      "enunciado": "Obtén el salario máximo de la colección empleados.",
+      "respuesta": {
+        "query": "db.empleados.aggregate([{$group:{_id:null,maximo:{$max:'$salario'}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$max"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 32,
+      "tipo": "aggregation",
+      "nivel": "medio",
+      "tema": "$min",
+      "enunciado": "Obtén la edad mínima de la colección usuarios.",
+      "respuesta": {
+        "query": "db.usuarios.aggregate([{$group:{_id:null,minimo:{$min:'$edad'}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$min"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 33,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "pipeline avanzada",
+      "enunciado": "Obtén el promedio de ventas por categoría mostrando únicamente categorías con promedio mayor a 100.",
+      "respuesta": {
+        "query": "db.ventas.aggregate([{$group:{_id:'$categoria',promedio:{$avg:'$monto'}}},{$match:{promedio:{$gt:100}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$group","$avg","$match"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 34,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "operador in",
+      "enunciado": "Consulta usuarios cuyo rol sea admin o editor.",
+      "respuesta": {
+        "query": "db.usuarios.find({rol:{$in:['admin','editor']}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$in"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 35,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "operador exists",
+      "enunciado": "Consulta documentos que tengan el campo telefono.",
+      "respuesta": {
+        "query": "db.clientes.find({telefono:{$exists:true}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$exists"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 36,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "push",
+      "enunciado": "Agrega el valor 'mongodb' al arreglo tecnologias del usuario Ana.",
+      "respuesta": {
+        "query": "db.usuarios.updateOne({nombre:'Ana'},{$push:{tecnologias:'mongodb'}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$push"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 37,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "pull",
+      "enunciado": "Elimina el valor 'php' del arreglo tecnologias del usuario Luis.",
+      "respuesta": {
+        "query": "db.usuarios.updateOne({nombre:'Luis'},{$pull:{tecnologias:'php'}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$pull"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 38,
+      "tipo": "delete",
+      "nivel": "medio",
+      "tema": "eliminacion multiple",
+      "enunciado": "Elimina todos los usuarios inactivos.",
+      "respuesta": {
+        "query": "db.usuarios.deleteMany({estado:'inactivo'})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["deleteMany"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 39,
+      "tipo": "optimizacion",
+      "nivel": "dificil",
+      "tema": "consulta eficiente",
+      "enunciado": "Corrige la consulta para devolver solo nombre y correo de usuarios activos limitando el resultado a 10 documentos.",
+      "query_base": "db.usuarios.find({estado:'activo'})",
+      "respuesta": {
+        "query": "db.usuarios.find({estado:'activo'},{nombre:1,correo:1,_id:0}).limit(10)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["correo:1","limit(10)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 40,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "pipeline con ordenamiento",
+      "enunciado": "Obtén las 5 categorías con menor promedio de ventas.",
+      "respuesta": {
+        "query": "db.ventas.aggregate([{$group:{_id:'$categoria',promedio:{$avg:'$monto'}}},{$sort:{promedio:1}},{$limit:5}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$group","$sort","$limit"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 41,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "operador ne",
+      "enunciado": "Consulta todos los usuarios cuyo estado no sea activo.",
+      "respuesta": {
+        "query": "db.usuarios.find({estado:{$ne:'activo'}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$ne"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 42,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "operador nin",
+      "enunciado": "Consulta productos cuya categoría no sea tecnologia ni hogar.",
+      "respuesta": {
+        "query": "db.productos.find({categoria:{$nin:['tecnologia','hogar']}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$nin"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 43,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "operador and",
+      "enunciado": "Consulta empleados con salario mayor a 1000 y edad menor a 40.",
+      "respuesta": {
+        "query": "db.empleados.find({$and:[{salario:{$gt:1000}},{edad:{$lt:40}}]})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$and"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 44,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "operador regex",
+      "enunciado": "Consulta usuarios cuyo nombre empiece por la letra A.",
+      "respuesta": {
+        "query": "db.usuarios.find({nombre:/^A/})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["/^A/"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 45,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "conteo",
+      "enunciado": "Cuenta cuántos usuarios tienen estado activo.",
+      "respuesta": {
+        "query": "db.usuarios.countDocuments({estado:'activo'})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["countDocuments"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 46,
+      "tipo": "aggregation",
+      "nivel": "medio",
+      "tema": "$sum",
+      "enunciado": "Calcula el total de ventas acumuladas.",
+      "respuesta": {
+        "query": "db.ventas.aggregate([{$group:{_id:null,total:{$sum:'$monto'}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$sum"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 47,
+      "tipo": "aggregation",
+      "nivel": "medio",
+      "tema": "$sort",
+      "enunciado": "Ordena las categorías por total de ventas de mayor a menor usando aggregation.",
+      "respuesta": {
+        "query": "db.ventas.aggregate([{$group:{_id:'$categoria',total:{$sum:'$monto'}}},{$sort:{total:-1}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$sort"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 48,
+      "tipo": "aggregation",
+      "nivel": "medio",
+      "tema": "$limit",
+      "enunciado": "Obtén únicamente las 2 categorías con mayor total de ventas.",
+      "respuesta": {
+        "query": "db.ventas.aggregate([{$group:{_id:'$categoria',total:{$sum:'$monto'}}},{$sort:{total:-1}},{$limit:2}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$limit"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 49,
+      "tipo": "indices",
+      "nivel": "medio",
+      "tema": "listado de indices",
+      "enunciado": "Muestra todos los índices de la colección usuarios.",
+      "respuesta": {
+        "query": "db.usuarios.getIndexes()",
+        "validacion": {
+          "tipo": "exacta",
+          "expected": "db.usuarios.getIndexes()",
+          "wildcard": false
+        }
+      }
+    },
+    {
+      "id": 50,
+      "tipo": "indices",
+      "nivel": "medio",
+      "tema": "eliminacion de indices",
+      "enunciado": "Elimina el índice nombre_1 de la colección usuarios.",
+      "respuesta": {
+        "query": "db.usuarios.dropIndex('nombre_1')",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["dropIndex"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 51,
+      "tipo": "explain",
+      "nivel": "medio",
+      "tema": "analisis de rendimiento",
+      "enunciado": "Analiza el rendimiento de una consulta por correo usando executionStats.",
+      "respuesta": {
+        "query": "db.usuarios.find({correo:'ana@mail.com'}).explain('executionStats')",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["executionStats"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 52,
+      "tipo": "optimizacion",
+      "nivel": "dificil",
+      "tema": "uso de proyecciones",
+      "enunciado": "Corrige la consulta para devolver únicamente nombre y edad de empleados con salario mayor a 2000.",
+      "query_base": "db.empleados.find({salario:{$gt:2000}})",
+      "respuesta": {
+        "query": "db.empleados.find({salario:{$gt:2000}},{nombre:1,edad:1,_id:0})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["nombre:1","edad:1"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 53,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "rename",
+      "enunciado": "Renombra el campo telefono a celular en todos los documentos de clientes.",
+      "respuesta": {
+        "query": "db.clientes.updateMany({},{$rename:{telefono:'celular'}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$rename"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 54,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "unset",
+      "enunciado": "Elimina el campo temporal de todos los documentos de logs.",
+      "respuesta": {
+        "query": "db.logs.updateMany({},{$unset:{temporal:''}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$unset"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 55,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "elementos de arreglo",
+      "enunciado": "Consulta usuarios que tengan el valor mongodb dentro del arreglo tecnologias.",
+      "respuesta": {
+        "query": "db.usuarios.find({tecnologias:'mongodb'})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["mongodb"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 56,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "pipeline multiple",
+      "enunciado": "Obtén el promedio de salario por departamento ordenado de mayor a menor.",
+      "respuesta": {
+        "query": "db.empleados.aggregate([{$group:{_id:'$departamento',promedio:{$avg:'$salario'}}},{$sort:{promedio:-1}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$group","$avg","$sort"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 57,
+      "tipo": "indices",
+      "nivel": "dificil",
+      "tema": "indice compuesto optimizado",
+      "enunciado": "Crea un índice compuesto para optimizar búsquedas por categoria y precio.",
+      "respuesta": {
+        "query": "db.productos.createIndex({categoria:1,precio:1})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["categoria:1","precio:1"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 58,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "distinct",
+      "enunciado": "Obtén todos los valores distintos del campo categoria en productos.",
+      "respuesta": {
+        "query": "db.productos.distinct('categoria')",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["distinct"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 59,
+      "tipo": "delete",
+      "nivel": "medio",
+      "tema": "delete con filtro",
+      "enunciado": "Elimina todos los empleados con edad menor a 18.",
+      "respuesta": {
+        "query": "db.empleados.deleteMany({edad:{$lt:18}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$lt"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 60,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "pipeline compleja",
+      "enunciado": "Obtén las 3 categorías con menor total de ventas mostrando solo categorias con total mayor a 500.",
+      "respuesta": {
+        "query": "db.ventas.aggregate([{$group:{_id:'$categoria',total:{$sum:'$monto'}}},{$match:{total:{$gt:500}}},{$sort:{total:1}},{$limit:3}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$group","$match","$sort","$limit"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 61,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "findOne",
+      "enunciado": "Obtén un único documento de la colección usuarios cuyo nombre sea Ana.",
+      "respuesta": {
+        "query": "db.usuarios.findOne({nombre:'Ana'})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["findOne"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 62,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "comparador gte",
+      "enunciado": "Consulta productos cuyo precio sea mayor o igual a 50.",
+      "respuesta": {
+        "query": "db.productos.find({precio:{$gte:50}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$gte"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 63,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "comparador lte",
+      "enunciado": "Consulta empleados cuya edad sea menor o igual a 65.",
+      "respuesta": {
+        "query": "db.empleados.find({edad:{$lte:65}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$lte"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 64,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "ordenamiento multiple",
+      "enunciado": "Ordena los usuarios primero por estado ascendente y luego por edad descendente.",
+      "respuesta": {
+        "query": "db.usuarios.find().sort({estado:1,edad:-1})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["estado:1","edad:-1"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 65,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "set multiple",
+      "enunciado": "Actualiza el nombre a Carlos y la edad a 40 del usuario con id 1.",
+      "respuesta": {
+        "query": "db.usuarios.updateOne({id:1},{$set:{nombre:'Carlos',edad:40}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$set"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 66,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "upsert",
+      "enunciado": "Actualiza el usuario Ana estableciendo edad 25 y crea el documento si no existe.",
+      "respuesta": {
+        "query": "db.usuarios.updateOne({nombre:'Ana'},{$set:{edad:25}},{upsert:true})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["upsert:true"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 67,
+      "tipo": "delete",
+      "nivel": "medio",
+      "tema": "deleteOne con filtro numerico",
+      "enunciado": "Elimina un producto cuyo stock sea igual a 0.",
+      "respuesta": {
+        "query": "db.productos.deleteOne({stock:0})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["deleteOne"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 68,
+      "tipo": "aggregation",
+      "nivel": "medio",
+      "tema": "$match y $group",
+      "enunciado": "Obtén el total de ventas por categoria considerando solo ventas mayores a 100.",
+      "respuesta": {
+        "query": "db.ventas.aggregate([{$match:{monto:{$gt:100}}},{$group:{_id:'$categoria',total:{$sum:'$monto'}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$match","$group"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 69,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "$project calculado",
+      "enunciado": "Muestra nombre y salario anual calculado multiplicando salario mensual por 12.",
+      "respuesta": {
+        "query": "db.empleados.aggregate([{$project:{_id:0,nombre:1,salarioAnual:{$multiply:['$salario',12]}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$multiply"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 70,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "pipeline con proyeccion",
+      "enunciado": "Obtén el promedio de ventas por categoria mostrando únicamente categoria y promedio.",
+      "respuesta": {
+        "query": "db.ventas.aggregate([{$group:{_id:'$categoria',promedio:{$avg:'$monto'}}},{$project:{_id:0,categoria:'$_id',promedio:1}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$group","$project"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 71,
+      "tipo": "indices",
+      "nivel": "medio",
+      "tema": "indice descendente",
+      "enunciado": "Crea un índice descendente sobre el campo fecha.",
+      "respuesta": {
+        "query": "db.logs.createIndex({fecha:-1})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["fecha:-1"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 72,
+      "tipo": "indices",
+      "nivel": "dificil",
+      "tema": "indice multiple",
+      "enunciado": "Crea un índice compuesto sobre estado ascendente y fecha descendente.",
+      "respuesta": {
+        "query": "db.ordenes.createIndex({estado:1,fecha:-1})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["estado:1","fecha:-1"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 73,
+      "tipo": "explain",
+      "nivel": "medio",
+      "tema": "analisis con sort",
+      "enunciado": "Analiza el plan de ejecución de una consulta ordenada por precio.",
+      "respuesta": {
+        "query": "db.productos.find().sort({precio:1}).explain('executionStats')",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["executionStats","sort"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 74,
+      "tipo": "optimizacion",
+      "nivel": "dificil",
+      "tema": "consulta limitada",
+      "enunciado": "Corrige la consulta para devolver solo nombre y precio de los 5 productos más baratos.",
+      "query_base": "db.productos.find()",
+      "respuesta": {
+        "query": "db.productos.find({},{nombre:1,precio:1,_id:0}).sort({precio:1}).limit(5)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["precio:1","limit(5)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 75,
+      "tipo": "modelado",
+      "nivel": "dificil",
+      "tema": "documentos embebidos",
+      "enunciado": "Inserta un pedido con cliente Juan y un documento embebido direccion con ciudad Madrid y codigoPostal 28001.",
+      "respuesta": {
+        "query": "db.pedidos.insertOne({cliente:'Juan',direccion:{ciudad:'Madrid',codigoPostal:28001}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["direccion"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 76,
+      "tipo": "modelado",
+      "nivel": "dificil",
+      "tema": "arreglos embebidos",
+      "enunciado": "Inserta un documento en cursos con nombre BaseDatos y un arreglo estudiantes con Ana y Luis.",
+      "respuesta": {
+        "query": "db.cursos.insertOne({nombre:'BaseDatos',estudiantes:['Ana','Luis']})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["estudiantes"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 77,
+      "tipo": "transacciones",
+      "nivel": "dificil",
+      "tema": "inicio de transaccion",
+      "enunciado": "Inicia una transacción usando una sesión llamada session.",
+      "respuesta": {
+        "query": "session.startTransaction()",
+        "validacion": {
+          "tipo": "exacta",
+          "expected": "session.startTransaction()",
+          "wildcard": false
+        }
+      }
+    },
+    {
+      "id": 78,
+      "tipo": "transacciones",
+      "nivel": "dificil",
+      "tema": "confirmacion de transaccion",
+      "enunciado": "Confirma la transacción activa de la sesión session.",
+      "respuesta": {
+        "query": "session.commitTransaction()",
+        "validacion": {
+          "tipo": "exacta",
+          "expected": "session.commitTransaction()",
+          "wildcard": false
+        }
+      }
+    },
+    {
+      "id": 79,
+      "tipo": "transacciones",
+      "nivel": "dificil",
+      "tema": "cancelacion de transaccion",
+      "enunciado": "Cancela la transacción activa de la sesión session.",
+      "respuesta": {
+        "query": "session.abortTransaction()",
+        "validacion": {
+          "tipo": "exacta",
+          "expected": "session.abortTransaction()",
+          "wildcard": false
+        }
+      }
+    },
+    {
+      "id": 80,
+      "tipo": "sharding",
+      "nivel": "dificil",
+      "tema": "habilitacion de sharding",
+      "enunciado": "Habilita sharding para la base de datos tienda.",
+      "respuesta": {
+        "query": "sh.enableSharding('tienda')",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["enableSharding"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 81,
+      "tipo": "sharding",
+      "nivel": "dificil",
+      "tema": "shardCollection",
+      "enunciado": "Habilita sharding para la colección tienda.productos usando el campo productoId hashed.",
+      "respuesta": {
+        "query": "sh.shardCollection('tienda.productos',{productoId:'hashed'})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["shardCollection","hashed"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 82,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "elemMatch",
+      "enunciado": "Consulta pedidos que tengan un producto con nombre Laptop y cantidad mayor a 1.",
+      "respuesta": {
+        "query": "db.pedidos.find({productos:{$elemMatch:{nombre:'Laptop',cantidad:{$gt:1}}}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$elemMatch"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 83,
+      "tipo": "consulta",
+      "nivel": "medio",
+      "tema": "size",
+      "enunciado": "Consulta cursos que tengan exactamente 3 estudiantes.",
+      "respuesta": {
+        "query": "db.cursos.find({estudiantes:{$size:3}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$size"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 84,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "addToSet",
+      "enunciado": "Agrega el valor docker al arreglo tecnologias del usuario Ana evitando duplicados.",
+      "respuesta": {
+        "query": "db.usuarios.updateOne({nombre:'Ana'},{$addToSet:{tecnologias:'docker'}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$addToSet"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 85,
+      "tipo": "update",
+      "nivel": "medio",
+      "tema": "currentDate",
+      "enunciado": "Actualiza el campo ultimaActualizacion con la fecha actual en todos los documentos de productos.",
+      "respuesta": {
+        "query": "db.productos.updateMany({},{$currentDate:{ultimaActualizacion:true}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$currentDate"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 86,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "$unwind",
+      "enunciado": "Descompón el arreglo tecnologias de usuarios usando aggregation.",
+      "respuesta": {
+        "query": "db.usuarios.aggregate([{$unwind:'$tecnologias'}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$unwind"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 87,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "$unwind y $group",
+      "enunciado": "Cuenta cuántas veces aparece cada tecnologia en los usuarios.",
+      "respuesta": {
+        "query": "db.usuarios.aggregate([{$unwind:'$tecnologias'},{$group:{_id:'$tecnologias',total:{$sum:1}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$unwind","$group"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 88,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "$lookup",
+      "enunciado": "Realiza un lookup entre pedidos y clientes usando clienteId y _id.",
+      "respuesta": {
+        "query": "db.pedidos.aggregate([{$lookup:{from:'clientes',localField:'clienteId',foreignField:'_id',as:'cliente'}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$lookup"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 89,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "$lookup y $unwind",
+      "enunciado": "Obtén pedidos junto con el documento individual del cliente relacionado.",
+      "respuesta": {
+        "query": "db.pedidos.aggregate([{$lookup:{from:'clientes',localField:'clienteId',foreignField:'_id',as:'cliente'}},{$unwind:'$cliente'}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$lookup","$unwind"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 90,
+      "tipo": "aggregation",
+      "nivel": "dificil",
+      "tema": "$count",
+      "enunciado": "Cuenta cuántos usuarios tienen edad mayor a 18 usando aggregation.",
+      "respuesta": {
+        "query": "db.usuarios.aggregate([{$match:{edad:{$gt:18}}},{$count:'total'}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["$count"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 91,
+      "tipo": "indices",
+      "nivel": "dificil",
+      "tema": "indice unico",
+      "enunciado": "Crea un índice único sobre el campo correo.",
+      "respuesta": {
+        "query": "db.usuarios.createIndex({correo:1},{unique:true})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["unique:true"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 92,
+      "tipo": "indices",
+      "nivel": "dificil",
+      "tema": "indice text multiple",
+      "enunciado": "Crea un índice text sobre los campos titulo y descripcion.",
+      "respuesta": {
+        "query": "db.articulos.createIndex({titulo:'text',descripcion:'text'})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["text"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 93,
+      "tipo": "explain",
+      "nivel": "dificil",
+      "tema": "explain aggregation",
+      "enunciado": "Analiza el rendimiento de una aggregation que agrupa ventas por categoria.",
+      "respuesta": {
+        "query": "db.ventas.explain('executionStats').aggregate([{$group:{_id:'$categoria',total:{$sum:'$monto'}}}])",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["executionStats","aggregate"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 94,
+      "tipo": "optimizacion",
+      "nivel": "dificil",
+      "tema": "consulta eficiente con sort",
+      "enunciado": "Corrige la consulta para devolver únicamente nombre y precio de productos ordenados por precio descendente.",
+      "query_base": "db.productos.find()",
+      "respuesta": {
+        "query": "db.productos.find({},{nombre:1,precio:1,_id:0}).sort({precio:-1})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["precio:-1","nombre:1"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 95,
+      "tipo": "optimizacion",
+      "nivel": "dificil",
+      "tema": "consulta con limit",
+      "enunciado": "Corrige la consulta para devolver solo los primeros 3 usuarios activos mostrando nombre y correo.",
+      "query_base": "db.usuarios.find({estado:'activo'})",
+      "respuesta": {
+        "query": "db.usuarios.find({estado:'activo'},{nombre:1,correo:1,_id:0}).limit(3)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["correo:1","limit(3)"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 96,
+      "tipo": "modelado",
+      "nivel": "dificil",
+      "tema": "documentos anidados",
+      "enunciado": "Inserta un usuario con nombre Laura y un documento perfil con profesion Ingeniera y experiencia 5.",
+      "respuesta": {
+        "query": "db.usuarios.insertOne({nombre:'Laura',perfil:{profesion:'Ingeniera',experiencia:5}})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["perfil"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 97,
+      "tipo": "modelado",
+      "nivel": "dificil",
+      "tema": "referencias",
+      "enunciado": "Inserta un pedido con clienteId 1 y total 500.",
+      "respuesta": {
+        "query": "db.pedidos.insertOne({clienteId:1,total:500})",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["clienteId"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 98,
+      "tipo": "sharding",
+      "nivel": "dificil",
+      "tema": "estado del sharding",
+      "enunciado": "Muestra el estado actual del cluster de sharding.",
+      "respuesta": {
+        "query": "sh.status()",
+        "validacion": {
+          "tipo": "exacta",
+          "expected": "sh.status()",
+          "wildcard": false
+        }
+      }
+    },
+    {
+      "id": 99,
+      "tipo": "transacciones",
+      "nivel": "dificil",
+      "tema": "sesion",
+      "enunciado": "Crea una nueva sesión para utilizar transacciones.",
+      "respuesta": {
+        "query": "session=db.getMongo().startSession()",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["startSession"],
+          "wildcard": true
+        }
+      }
+    },
+    {
+      "id": 100,
+      "tipo": "optimizacion",
+      "nivel": "dificil",
+      "tema": "consulta eficiente completa",
+      "enunciado": "Corrige la consulta para devolver únicamente nombre y stock de productos con stock mayor a 0 ordenados por stock descendente limitando el resultado a 5.",
+      "query_base": "db.productos.find({stock:{$gt:0}})",
+      "respuesta": {
+        "query": "db.productos.find({stock:{$gt:0}},{nombre:1,stock:1,_id:0}).sort({stock:-1}).limit(5)",
+        "validacion": {
+          "tipo": "estructura",
+          "expected": ["stock:-1","limit(5)"],
+          "wildcard": true
+        }
+      }
+    }
+  ]
